@@ -1,0 +1,5 @@
+---
+- name: "{{ instance }}: save hash of instance vars"
+  template:
+    src: instance_vars.md5.j2
+    dest: "{{ instance_data_root_folder }}instance_vars.md5"

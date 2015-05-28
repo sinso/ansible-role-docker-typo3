@@ -1,0 +1,11 @@
+---
+- name: "{{ instance }}: ensure phpfpm container is {{ state }}"
+  docker:
+    name: "{{ instance }}-phpfpm"
+    image: "sinso/phpfpm-flow:{{ docker_containers.phpfpm.image_tag }}"
+    state: "{{ state }}"
+    links:
+      - "{{ instance }}-db:db"
+    volumes:
+      - "{{ instance_data_root_folder }}web:/data/web"
+  when: docker_containers.phpfpm is defined

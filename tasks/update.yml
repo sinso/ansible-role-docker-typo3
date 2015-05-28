@@ -1,0 +1,59 @@
+---
+#
+# Ensure the application source is as defined in source_url and source_ref
+# stop and start containers if necessery
+# update docker images
+# create backups before updating
+#
+# Parameters:
+# - create_backup=yes : create backups before updating, default: no
+# - pull_docker_images=yes : update docker images, default: no
+#
+
+- include: pull_docker_images.yml
+  when: pull_docker_images == 'yes'
+
+- name: checkout source code branch
+  git:
+    repo: "{{ source_url }}"
+    dest: "{{ instance_data_root_folder }}web/releases/{{ source_ref_stripped }}"
+    version: "{{ source_ref }}"
+    recursive: yes
+
+- name: create symlink to next web source
+  file:
+    state: link
+    src: "./{{ source_ref_stripped }}"
+    dest: "{{ instance_data_root_folder }}web/releases/next"
+  register: source_url
+
+
+- include: fix_git_environment.yml
+
+- include: create_shared_folders.yml
+
+- include: prepare_backup.yml
+  when: create_backup == 'yes'
+
+- include: stop.yml
+
+- include: backup.yml
+  when: create_backup == 'yes'
+
+- name: create symlink to previous web source
+  command: "mv {{ instance_data_root_folder }}web/releases/current {{ instance_data_root_folder }}web/releases/previous"
+  args:
+    removes: "{{ instance_data_root_folder }}web/releases/current"
+
+- name: create symlink to current web source
+  command: "mv {{ instance_data_root_folder }}web/releases/next {{ instance_data_root_folder }}web/releases/current"
+  args:
+    removes: "{{ instance_data_root_folder }}web/releases/next"
+
+
+- include: start.yml
+
+- include: finish_backup.yml
+  when: create_backup == 'yes'
+
+- include: save_instance_vars_hash.yml

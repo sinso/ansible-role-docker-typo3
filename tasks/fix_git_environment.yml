@@ -1,0 +1,10 @@
+---
+- name: set core.filemode false
+  command: "git config core.filemode false"
+  args:
+    chdir: "{{ instance_data_root_folder }}web/releases/next"
+
+#- name: set core.filemode false
+#  command: "git submodule each 'config core.filemode false'"
+#  args:
+#    chdir: "{{ instance_data_root_folder }}web/releases/next"

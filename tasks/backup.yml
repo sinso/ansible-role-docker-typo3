@@ -1,0 +1,11 @@
+---
+- name: "{{ instance }}: create backup folder"
+  file:
+    path: "{{ instance_backup_root_folder }}"
+    state: directory
+
+- name: "{{ instance }}: backup instance data"
+  synchronize:
+    src: "{{ instance_data_root_folder }}"
+    dest: "{{ instance_backup_root_folder }}"
+  delegate_to: "{{ inventory_hostname }}"

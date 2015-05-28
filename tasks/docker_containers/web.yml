@@ -1,0 +1,12 @@
+---
+- name: "{{ instance }}: ensure web container is {{ state }}"
+  docker:
+    name: "{{ instance }}-web"
+    image: "sinso/nginx:{{ docker_containers.web.image_tag }}"
+    state: "{{ state }}"
+    links:
+      - "{{ instance }}-phpfpm:phpfpm"
+    volumes:
+      - "{{ instance_data_root_folder }}web:/data/web"
+      - "{{ instance_data_root_folder }}nginx/custom:/etc/nginx/conf.d/custom"
+  when: docker_containers.web is defined

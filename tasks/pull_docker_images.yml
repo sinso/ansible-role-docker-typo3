@@ -1,0 +1,15 @@
+---
+#
+# Pull and update local docker images
+#
+
+# TODO: Doesn't work currently. Maybe try later...
+#- name: pull latest docker images from registry
+#  docker:
+#    image: "{{ item.value }}:{{ docker_containers[item.key].image_tag }}"
+#    pull: always
+#  with_dict: docker_images
+
+- name: pull latest docker images from registry
+  command: "docker pull {{ item.value }}:{{ docker_containers[item.key].image_tag }}"
+  with_dict: docker_images

@@ -1,0 +1,8 @@
+---
+#
+# Ensure all docker containers are stopped
+#
+
+- include: docker_containers/web.yml state=stopped
+- include: docker_containers/phpfpm.yml state=stopped
+- include: docker_containers/db.yml state=stopped

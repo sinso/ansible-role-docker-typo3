@@ -1,0 +1,15 @@
+---
+- name: "{{ instance }}: ensure db container is {{ state }}"
+  docker:
+    name: "{{ instance }}-db"
+    image: "mariadb:{{ docker_containers.db.image_tag }}"
+    state: "{{ state }}"
+#    pull: "{%if pull_docker_images == 'yes'%}always{% else %}missing{% endif %}"
+    volumes:
+      - "{{ instance_data_root_folder }}mysql:/var/lib/mysql"
+    env:
+        MYSQL_ROOT_PASSWORD: "{{ lookup('password', '../../../instance_credentials/' + instance + '/dockerapp-typo3/docker_containers/db/root length=32') }}"
+        MYSQL_DATABASE: "{{ instance }}"
+        MYSQL_USER: "{{ instance }}"
+        MYSQL_PASSWORD: "{{ lookup('password', '../../../instance_credentials/' + instance + '/dockerapp-typo3/docker_containers/db/user length=32') }}"
+  when: docker_containers.db is defined

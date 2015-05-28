@@ -1,0 +1,37 @@
+---
+#
+# create shared folders
+# All persistent data is stored outside the application source folder.
+# Within the application there are symlinks that link to the shared folder
+# All shared folders are defined in shared_folders
+#
+# e.g.
+# shared_folders:
+#   'Persistent': 'Data/Persistent'
+#   'fileadmin': 'fileadmin'
+#   'uploads': 'uploads'
+#
+
+- name: load name vars
+  include_vars: "application_types/{{ application_type }}.yml"
+
+- name: "{{ instance }}: create shared folders according to application_type {{ application_type }}"
+  file:
+    path: "{{ instance_data_root_folder }}web/share/{{ item.key }}"
+    state: directory
+  with_dict: shared_folders
+
+- name: "{{ instance }}: create parent folders for symlinks according to application_type {{ application_type }}"
+  file:
+    path: "{{ instance_data_root_folder }}web/releases/next/{{ item.value | regex_replace('[^/]+$', '') }}"
+    state: directory
+  with_dict: shared_folders
+
+- name: "{{ instance }}: create symlinks according to application_type {{ application_type }}"
+  file:
+    state: link
+    src: "./../{{ item.value | regex_replace('[^/]+', '..') }}/share/{{ item.key }}"
+    dest: "{{ instance_data_root_folder }}web/releases/next/{{ item.value }}"
+    force: yes
+  with_dict: shared_folders
+  ignore_errors: yes

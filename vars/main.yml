@@ -1,0 +1,21 @@
+---
+pull_docker_images: 'no'
+create_backup: 'no'
+
+data_root_folder: /opt/
+instance_data_root_folder: "{{ data_root_folder }}{{ instance }}/data/"
+
+backup_root_folder: /backups/
+instance_backup_root_folder: "{{ backup_root_folder }}{{ instance }}/{{ ansible_date_time.iso8601 | replace(':', '-') }}/"
+
+shared_folders: {}
+docker_images:
+  'web': 'sinso/nginx'
+  'phpfpm': 'sinso/phpfpm-flow'
+  'db': 'mariadb'
+#  elasticsearch:
+#  redis:
+
+source_ref_stripped: "{{ source_ref | replace('/', '-') }}"
+
+new_instance_vars_hash: "{{ lookup('md5hash', 'instance_vars/' + instance + '.yml') }}"

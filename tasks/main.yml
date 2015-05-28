@@ -1,0 +1,14 @@
+---
+- name: load name vars
+  include_vars: "instance_vars/{{ instance }}.yml"
+
+- name: "{{ instance }}: check current version"
+  command: "cat {{ instance_data_root_folder }}instance_vars.md5"
+  register: current_instance_vars_hash
+  changed_when: current_instance_vars_hash.stdout.find(new_instance_vars_hash) == -1
+  ignore_errors: yes
+
+
+- include: update.yml
+  when: current_instance_vars_hash.changed
+#  when: source_url.changed
