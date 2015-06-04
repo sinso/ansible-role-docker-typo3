@@ -1,4 +1,7 @@
 ---
+domains: []
+global_base_domain: 'local'
+
 pull_docker_images: 'no'
 create_backup: 'no'
 force_update : 'no'
