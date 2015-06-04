@@ -9,8 +9,8 @@
     volumes:
       - "{{ instance_data_root_folder }}mysql:/var/lib/mysql"
     env:
-        MYSQL_ROOT_PASSWORD: "{{ lookup('password', '../../../instance_credentials/' + instance + '/dockerapp-typo3/docker_containers/db/root length=32') }}"
+        MYSQL_ROOT_PASSWORD: "{{ lookup('password', '../../../../instance_credentials/' + instance + '/docker-typo3/docker_containers/db/root length=32') }}"
         MYSQL_DATABASE: "{{ instance }}"
         MYSQL_USER: "{{ instance }}"
-        MYSQL_PASSWORD: "{{ lookup('password', '../../../instance_credentials/' + instance + '/dockerapp-typo3/docker_containers/db/user length=32') }}"
+        MYSQL_PASSWORD: "{{ lookup('password', '../../../../instance_credentials/' + instance + '/docker-typo3/docker_containers/db/user length=32') }}"
   when: docker_containers.db is defined
