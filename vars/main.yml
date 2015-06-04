@@ -12,7 +12,7 @@ shared_folders: {}
 docker_images:
   'web': 'sinso/nginx'
   'phpfpm': 'sinso/phpfpm-flow'
-  'db': 'mariadb'
+  'db': 'sinso/mariadb'
 #  elasticsearch:
 #  redis:
 
