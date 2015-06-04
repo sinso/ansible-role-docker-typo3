@@ -13,6 +13,10 @@
 - include: pull_docker_images.yml
   when: pull_docker_images == 'yes'
 
+- set_fact:
+    source_ref_stripped: 'current'
+  when: not enable_release_versioning
+
 - name: checkout source code branch
   git:
     repo: "{{ source_url }}"
@@ -44,11 +48,13 @@
   command: "mv {{ instance_data_root_folder }}web/releases/current {{ instance_data_root_folder }}web/releases/previous"
   args:
     removes: "{{ instance_data_root_folder }}web/releases/current"
+  when: enable_release_versioning
 
 - name: create symlink to current web source
   command: "mv {{ instance_data_root_folder }}web/releases/next {{ instance_data_root_folder }}web/releases/current"
   args:
     removes: "{{ instance_data_root_folder }}web/releases/next"
+  when: enable_release_versioning
 
 
 - include: start.yml

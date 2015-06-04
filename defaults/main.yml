@@ -1,5 +1,9 @@
 ---
+#instance: ''
 domains: []
+enable_release_versioning: yes
+
+
 global_base_domain: 'local'
 
 pull_docker_images: 'no'
