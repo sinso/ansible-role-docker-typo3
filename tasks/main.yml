@@ -12,3 +12,5 @@
 - include: update.yml
   when: current_instance_vars_hash.changed or force_update == 'yes'
 #  when: source_url.changed
+
+- include: start.yml
