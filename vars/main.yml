@@ -1,6 +1,7 @@
 ---
 pull_docker_images: 'no'
 create_backup: 'no'
+force_update : 'no'
 
 data_root_folder: /opt/
 instance_data_root_folder: "{{ data_root_folder }}{{ instance }}/data/"
