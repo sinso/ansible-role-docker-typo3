@@ -5,6 +5,8 @@
     image: "sinso/nginx:{{ docker_containers.web.image_tag }}"
     state: "{{ state }}"
     restart_policy: always
+    env:
+      VIRTUAL_HOST: "{{ instance }}.{{ global_base_domain }}{% if domains|length %},{% endif %}{{ domains|join(',') }}"
     links:
       - "{{ instance }}-phpfpm:phpfpm"
     volumes:
