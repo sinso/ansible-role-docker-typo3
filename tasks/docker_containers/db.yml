@@ -4,6 +4,7 @@
     name: "{{ instance }}-db"
     image: "mariadb:{{ docker_containers.db.image_tag }}"
     state: "{{ state }}"
+    restart_policy: always
 #    pull: "{%if pull_docker_images == 'yes'%}always{% else %}missing{% endif %}"
     volumes:
       - "{{ instance_data_root_folder }}mysql:/var/lib/mysql"

@@ -4,6 +4,7 @@
     name: "{{ instance }}-web"
     image: "sinso/nginx:{{ docker_containers.web.image_tag }}"
     state: "{{ state }}"
+    restart_policy: always
     links:
       - "{{ instance }}-phpfpm:phpfpm"
     volumes:

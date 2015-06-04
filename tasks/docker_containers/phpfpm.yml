@@ -4,6 +4,7 @@
     name: "{{ instance }}-phpfpm"
     image: "sinso/phpfpm-flow:{{ docker_containers.phpfpm.image_tag }}"
     state: "{{ state }}"
+    restart_policy: always
     links:
       - "{{ instance }}-db:db"
     volumes:
