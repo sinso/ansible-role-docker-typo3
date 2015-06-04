@@ -5,6 +5,8 @@
     image: "sinso/phpfpm-flow:{{ docker_containers.phpfpm.image_tag }}"
     state: "{{ state }}"
     restart_policy: always
+    env:
+      APPLICATION_TYPE: "{{ application_type | upper() }}"
     links:
       - "{{ instance }}-db:db"
     volumes:
