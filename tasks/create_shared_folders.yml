@@ -19,6 +19,9 @@
   file:
     path: "{{ instance_data_root_folder }}web/share/{{ item.key }}"
     state: directory
+    owner: 33
+    group: 33
+    recurse: yes
   with_dict: shared_folders
 
 - name: "{{ instance }}: create parent folders for symlinks according to application_type {{ application_type }}"
