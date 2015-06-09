@@ -2,7 +2,7 @@
 - name: "{{ instance }}: ensure phpfpm container is {{ state }}"
   docker:
     name: "{{ instance }}-phpfpm"
-    image: "sinso/phpfpm-flow:{{ docker_containers.phpfpm.image_tag }}"
+    image: "{{ docker_images.phpfpm }}:{{ docker_containers.phpfpm.image_tag }}"
     state: "{{ state }}"
     restart_policy: always
     env:

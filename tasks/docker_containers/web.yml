@@ -2,7 +2,7 @@
 - name: "{{ instance }}: ensure web container is {{ state }}"
   docker:
     name: "{{ instance }}-web"
-    image: "sinso/nginx:{{ docker_containers.web.image_tag }}"
+    image: "{{ docker_images.web }}:{{ docker_containers.web.image_tag }}"
     state: "{{ state }}"
     restart_policy: always
     env:
