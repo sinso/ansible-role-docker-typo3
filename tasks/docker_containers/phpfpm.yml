@@ -20,6 +20,9 @@
       DOMAIN_LIST: "{{ domain_list }}"
       PRIMARY_DOMAIN: "{{ primary_domain }}"
       PRIMARY_SCHEMA: "{{ primary_schema }}"
+      SSMTP_ROOT: "{{ ssmtp_root }}"
+      SSMTP_MAILHUB: "{{ ssmtp_mailhub }}"
+      SSMTP_HOSTNAME: "{{ ssmtp_hostname }}"
     links: "{{ links }}"
     volumes:
       - "{{ instance_data_root_folder }}web:/data/web"

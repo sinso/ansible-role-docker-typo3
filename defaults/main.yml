@@ -6,6 +6,11 @@ primary_schema: ''
 enable_release_versioning: yes
 
 
+ssmtp_root: ""
+ssmtp_mailhub: ""
+ssmtp_hostname: ""
+
+
 global_base_domain: 'local'
 
 pull_docker_images: 'no'
