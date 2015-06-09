@@ -1,4 +1,13 @@
 ---
+
+- set_fact:
+    links: []
+
+- name: link db container
+  set_fact: 
+    links: "{{links}} + [ instance + '-db:db' ]"
+  when: docker_containers.db is defined
+
 - name: "{{ instance }}: ensure phpfpm container is {{ state }}"
   docker:
     name: "{{ instance }}-phpfpm"
@@ -7,8 +16,7 @@
     restart_policy: always
     env:
       APPLICATION_TYPE: "{{ application_type | upper() }}"
-    links:
-      - "{{ instance }}-db:db"
+    links: "{{ links }}"
     volumes:
       - "{{ instance_data_root_folder }}web:/data/web"
   when: docker_containers.phpfpm is defined
