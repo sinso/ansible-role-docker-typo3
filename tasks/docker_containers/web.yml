@@ -6,7 +6,7 @@
     state: "{{ state }}"
     restart_policy: always
     env:
-      VIRTUAL_HOST: "{{ instance }}.{{ global_base_domain }}{% if domains|length %},{% endif %}{{ domains|join(',') }}"
+      VIRTUAL_HOST: "{{ domain_list }}"
     links:
       - "{{ instance }}-phpfpm:phpfpm"
     volumes:

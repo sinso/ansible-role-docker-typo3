@@ -16,6 +16,10 @@
     restart_policy: always
     env:
       APPLICATION_TYPE: "{{ application_type | upper() }}"
+      DOMAINS: "{{ domain_list }}"
+      DOMAIN_LIST: "{{ domain_list }}"
+      PRIMARY_DOMAIN: "{{ primary_domain }}"
+      PRIMARY_SCHEMA: "{{ primary_schema }}"
     links: "{{ links }}"
     volumes:
       - "{{ instance_data_root_folder }}web:/data/web"
