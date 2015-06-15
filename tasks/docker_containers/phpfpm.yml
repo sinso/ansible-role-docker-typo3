@@ -26,4 +26,5 @@
     links: "{{ links }}"
     volumes:
       - "{{ instance_data_root_folder }}web:/data/web"
+      - "{{ instance_data_root_folder }}log:/data/log"
   when: docker_containers.phpfpm is defined

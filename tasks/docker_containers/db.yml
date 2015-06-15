@@ -8,6 +8,7 @@
 #    pull: "{%if pull_docker_images == 'yes'%}always{% else %}missing{% endif %}"
     volumes:
       - "{{ instance_data_root_folder }}mysql:/var/lib/mysql"
+      - "{{ instance_data_root_folder }}log:/data/log"
     env:
         MYSQL_ROOT_PASSWORD: "{{ lookup('password', '../../../../instance_credentials/' + instance + '/docker-typo3/docker_containers/db/root length=32') }}"
         MYSQL_DATABASE: "{{ instance }}"

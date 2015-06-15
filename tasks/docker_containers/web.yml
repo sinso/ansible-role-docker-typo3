@@ -11,5 +11,6 @@
       - "{{ instance }}-phpfpm:phpfpm"
     volumes:
       - "{{ instance_data_root_folder }}web:/data/web"
+      - "{{ instance_data_root_folder }}log:/data/log"
       - "{{ instance_data_root_folder }}nginx/custom:/etc/nginx/conf.d/custom"
   when: docker_containers.web is defined

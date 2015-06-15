@@ -1,0 +1,11 @@
+{{ instance_data_root_folder }}log/*/*.log {
+  rotate 365
+  daily
+  missingok
+  notifempty
+  compress
+  delaycompress
+  copytruncate
+  dateext
+  dateformat -%Y-%m-%d
+}

@@ -1,0 +1,5 @@
+---
+- name: "Ensure logrotate is configured"
+  template:
+    src: logrotate.d/docker-typo3.j2
+    dest: /etc/logrotate.d/docker-typo3-{{ instance }}
