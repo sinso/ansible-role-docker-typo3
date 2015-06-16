@@ -16,6 +16,8 @@
     restart_policy: always
     env:
       APPLICATION_TYPE: "{{ application_type | upper() }}"
+      TYPO3_CONTEXT: 'Production'
+      FLOW_CONTEXT: 'Production'
       DOMAINS: "{{ domain_list }}"
       DOMAIN_LIST: "{{ domain_list }}"
       PRIMARY_DOMAIN: "{{ primary_domain }}"
