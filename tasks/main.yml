@@ -3,6 +3,7 @@
   include_vars: "instance_vars/{{ instance }}.yml"
 
 - include: configure_logrotate.yml
+- include: configure_crontab.yml
 
 - name: "{{ instance }}: check current version"
   command: "cat {{ instance_data_root_folder }}instance_vars.md5"
