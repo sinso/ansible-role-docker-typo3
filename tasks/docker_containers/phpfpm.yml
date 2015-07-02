@@ -29,4 +29,5 @@
     volumes:
       - "{{ instance_data_root_folder }}web:/data/web"
       - "{{ instance_data_root_folder }}log:/data/log"
+      - "{{ instance_data_root_folder }}cron.d:/etc/cron.d"
   when: docker_containers.phpfpm is defined
