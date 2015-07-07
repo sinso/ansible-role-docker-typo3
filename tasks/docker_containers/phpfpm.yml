@@ -8,6 +8,19 @@
     links: "{{links}} + [ instance + '-db:db' ]"
   when: docker_containers.db is defined
 
+
+- name: set default volumes
+  set_fact:
+    volumes:
+      - "{{ instance_data_root_folder }}web:/data/web"
+      - "{{ instance_data_root_folder }}log:/data/log"
+      - "{{ instance_data_root_folder }}cron.d:/etc/cron.d"
+
+- name: add transfer_folders to volumes
+  set_fact:
+    volumes: "{{ volumes }} + {{ transfer_folders }}"
+  when: transfer_folders
+
 - name: "{{ instance }}: ensure phpfpm container is {{ state }}"
   docker:
     name: "{{ instance }}-phpfpm"
@@ -26,8 +39,5 @@
       SSMTP_MAILHUB: "{{ ssmtp_mailhub }}"
       SSMTP_HOSTNAME: "{{ ssmtp_hostname }}"
     links: "{{ links }}"
-    volumes:
-      - "{{ instance_data_root_folder }}web:/data/web"
-      - "{{ instance_data_root_folder }}log:/data/log"
-      - "{{ instance_data_root_folder }}cron.d:/etc/cron.d"
+    volumes: "{{ volumes }}"
   when: docker_containers.phpfpm is defined

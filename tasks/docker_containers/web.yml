@@ -1,4 +1,17 @@
 ---
+- name: set default volumes
+  set_fact:
+    volumes:
+      - "{{ instance_data_root_folder }}web:/data/web"
+      - "{{ instance_data_root_folder }}log:/data/log"
+      - "{{ instance_data_root_folder }}nginx/custom:/etc/nginx/conf.d/custom"
+
+- name: add transfer_folders to volumes
+  set_fact:
+    volumes: "{{ volumes }} + {{ transfer_folders }}"
+  when: transfer_folders
+
+
 - name: "{{ instance }}: ensure web container is {{ state }}"
   docker:
     name: "{{ instance }}-web"
@@ -9,8 +22,5 @@
       VIRTUAL_HOST: "{{ domain_list }}"
     links:
       - "{{ instance }}-phpfpm:phpfpm"
-    volumes:
-      - "{{ instance_data_root_folder }}web:/data/web"
-      - "{{ instance_data_root_folder }}log:/data/log"
-      - "{{ instance_data_root_folder }}nginx/custom:/etc/nginx/conf.d/custom"
+    volumes: "{{ volumes }}"
   when: docker_containers.web is defined
