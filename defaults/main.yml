@@ -23,6 +23,8 @@ instance_data_root_folder: "{{ data_root_folder }}{{ instance }}/data/"
 backup_root_folder: /backups/
 instance_backup_root_folder: "{{ backup_root_folder }}{{ instance }}/{{ ansible_date_time.iso8601 | replace(':', '-') }}/"
 
+instance_ca_certificates_folder: "{{ data_root_folder}}ca-certificates/"
+
 transfer_folders: {}
 shared_folders: {}
 docker_images:
