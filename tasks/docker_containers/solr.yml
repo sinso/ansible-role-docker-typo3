@@ -1,0 +1,12 @@
+---
+- name: "{{ instance }}: ensure solr container is {{ state }}"
+  docker:
+    name: "{{ instance }}-solr"
+    image: "{{ docker_images.solr }}:{{ docker_containers.solr.image_tag }}"
+    state: "{{ state }}"
+    restart_policy: always
+#    pull: "{%if pull_docker_images == 'yes'%}always{% else %}missing{% endif %}"
+    volumes:
+      - "{{ instance_data_root_folder }}solr:/opt/solr-tomcat/solr/typo3cores/data"
+#    env:
+  when: docker_containers.solr is defined

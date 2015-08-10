@@ -4,5 +4,6 @@
 #
 
 - include: docker_containers/db.yml state=started
+- include: docker_containers/solr.yml state=started
 - include: docker_containers/phpfpm.yml state=started
 - include: docker_containers/web.yml state=started

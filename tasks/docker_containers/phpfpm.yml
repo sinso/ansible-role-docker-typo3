@@ -8,6 +8,11 @@
     links: "{{links}} + [ instance + '-db:db' ]"
   when: docker_containers.db is defined
 
+- name: link solr container
+  set_fact:
+    links: "{{links}} + [ instance + '-solr:solr' ]"
+  when: docker_containers.solr is defined
+
 
 - name: set default volumes
   set_fact:
