@@ -1,0 +1,11 @@
+---
+- name: "{{ instance }}: ensure elasticsearch container is {{ state }}"
+  docker:
+    name: "{{ instance }}-elasticsearch"
+    image: "{{ docker_images.elasticsearch }}:{{ docker_containers.elasticsearch.image_tag }}"
+    state: "{{ state }}"
+    restart_policy: always
+#    pull: "{%if pull_docker_images == 'yes'%}always{% else %}missing{% endif %}"
+    volumes:
+      - "{{ instance_data_root_folder }}elasticsearch:/var/lib/mysql"
+  when: docker_containers.elasticsearch is defined

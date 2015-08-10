@@ -32,7 +32,7 @@ docker_images:
   'phpfpm': 'sinso/phpfpm-flow'
   'db': 'sinso/mariadb'
   'solr': 'sinso/solr-typo3'
-#  elasticsearch:
+  'elasticsearch': 'sinso/elasticsearch-neos'
 #  redis:
 
 source_ref_stripped: "{{ source_ref | replace('/', '-') }}"

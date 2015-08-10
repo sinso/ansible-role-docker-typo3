@@ -13,6 +13,10 @@
     links: "{{links}} + [ instance + '-solr:solr' ]"
   when: docker_containers.solr is defined
 
+- name: link elasticsearch container
+  set_fact:
+    links: "{{links}} + [ instance + '-elasticsearch:elasticsearch' ]"
+  when: docker_containers.elasticsearch is defined
 
 - name: set default volumes
   set_fact:
