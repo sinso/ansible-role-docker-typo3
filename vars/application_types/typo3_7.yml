@@ -1,0 +1,4 @@
+---
+shared_folders:
+  'fileadmin': 'fileadmin'
+  'uploads': 'uploads'
