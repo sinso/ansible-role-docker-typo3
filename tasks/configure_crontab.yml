@@ -8,6 +8,6 @@
     create: yes
     dest: "{{ instance_data_root_folder }}cron.d/typo3-scheduler"
     regexp: cli_dispatch
-    line: '* * * * * www-data /usr/local/bin/php /data/web/releases/current/typo3/cli_dispatch.phpsh scheduler >> /data/log/phpfpm/cron.log'
+    line: '* * * * * www-data /usr/local/bin/php /data/web/releases/current/typo3/cli_dispatch.phpsh scheduler >> /data/log/phpfpm/cron.log 2>&1'
   when: application_type | match("typo3")
 
