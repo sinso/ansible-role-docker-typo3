@@ -1,5 +1,6 @@
 ---
 #instance: ''
+application_type: ''
 domains: []
 primary_domain: "{{ instance }}.{{ global_base_domain }}"
 primary_schema: ''
