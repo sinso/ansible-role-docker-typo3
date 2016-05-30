@@ -7,5 +7,5 @@
     restart_policy: always
 #    pull: "{%if pull_docker_images == 'yes'%}always{% else %}missing{% endif %}"
     volumes:
-      - "{{ instance_data_root_folder }}elasticsearch:/var/lib/mysql"
+      - "{{ instance_data_root_folder }}elasticsearch:/usr/share/elasticsearch/data"
   when: docker_containers.elasticsearch is defined
