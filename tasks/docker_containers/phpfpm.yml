@@ -39,8 +39,8 @@
     restart_policy: always
     env:
       APPLICATION_TYPE: "{{ application_type | upper() }}"
-      TYPO3_CONTEXT: 'Production'
-      FLOW_CONTEXT: 'Production'
+      TYPO3_CONTEXT: "{{ typo3_context }}"
+      FLOW_CONTEXT: "{{ flow_context }}"
       DOMAINS: "{{ domain_list }}"
       DOMAIN_LIST: "{{ domain_list }}"
       PRIMARY_DOMAIN: "{{ primary_domain }}"
