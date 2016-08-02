@@ -1,6 +1,8 @@
 ---
 #instance: ''
 application_type: ''
+typo3_context: 'Production'
+flow_context: 'Production'
 domains: []
 primary_domain: "{{ instance }}.{{ global_base_domain }}"
 primary_schema: ''
