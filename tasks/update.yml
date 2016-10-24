@@ -23,6 +23,7 @@
     dest: "{{ instance_data_root_folder }}web/releases/{{ source_ref_stripped }}"
     version: "{{ source_ref }}"
     recursive: yes
+    force: "{{ force_git }}"
 
 - name: create symlink to next web source
   file:
