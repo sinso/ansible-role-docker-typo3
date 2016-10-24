@@ -7,7 +7,7 @@ domains: []
 primary_domain: "{{ instance }}.{{ global_base_domain }}"
 primary_schema: ''
 enable_release_versioning: yes
-
+force_git: no
 
 ssmtp_root: ""
 ssmtp_mailhub: ""
