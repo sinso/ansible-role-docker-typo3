@@ -1,6 +1,6 @@
 ---
 #
-# Configure crontab, e.g. run TYPO3 scheduler every minute
+# Configure crontab, e.g. run TYPO3 4 and 6 scheduler every minute
 #
 
 - name: ensure cronjob for TYPO3 scheduler is configured
@@ -9,5 +9,18 @@
     dest: "{{ instance_data_root_folder }}cron.d/typo3-scheduler"
     regexp: cli_dispatch
     line: '* * * * * www-data /usr/local/bin/php /data/web/releases/current/typo3/cli_dispatch.phpsh scheduler >> /data/log/phpfpm/cron.log 2>&1'
-  when: application_type | match("typo3")
+  when: application_type == 'typo3_4' or application_type == 'typo3_6'
+
+
+  #
+# Configure crontab, e.g. run TYPO3 7 and 8 scheduler every minute
+#
+
+- name: ensure cronjob for TYPO3 scheduler is configured
+  lineinfile: 
+    create: yes
+    dest: "{{ instance_data_root_folder }}cron.d/typo3-scheduler"
+    regexp: cli_dispatch
+    line: '* * * * * www-data /usr/local/bin/php /data/web/releases/current/web/typo3/cli_dispatch.phpsh scheduler >> /data/log/phpfpm/cron.log 2>&1'
+  when: application_type == 'typo3_7' or application_type == 'typo3_8'
 
