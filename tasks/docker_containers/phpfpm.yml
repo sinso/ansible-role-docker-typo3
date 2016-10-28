@@ -48,6 +48,7 @@
       SSMTP_ROOT: "{{ ssmtp_root }}"
       SSMTP_MAILHUB: "{{ ssmtp_mailhub }}"
       SSMTP_HOSTNAME: "{{ ssmtp_hostname }}"
+      ENCRYPTION_KEY: "{{ encryption_key }}"
     links: "{{ links }}"
     volumes: "{{ volumes }}"
   when: docker_containers.phpfpm is defined
