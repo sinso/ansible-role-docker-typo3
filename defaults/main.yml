@@ -13,6 +13,7 @@ ssmtp_root: ""
 ssmtp_mailhub: ""
 ssmtp_hostname: ""
 
+encryption_key: ""
 
 global_base_domain: 'local'
 
