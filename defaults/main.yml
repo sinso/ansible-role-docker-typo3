@@ -15,6 +15,9 @@ ssmtp_hostname: ""
 
 encryption_key: ""
 
+piwik_url: ""
+piwik_token: ""
+
 global_base_domain: 'local'
 
 pull_docker_images: 'no'
