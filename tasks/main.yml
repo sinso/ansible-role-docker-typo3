@@ -1,6 +1,6 @@
 ---
 - name: load name vars
-  include_vars: "instance_vars/{{ instance }}.yml"
+  include_vars: "instances/{{ instance }}/{{ sinso_env }}/vars.yml"
 
 - include: configure_logrotate.yml
 - include: configure_crontab.yml
