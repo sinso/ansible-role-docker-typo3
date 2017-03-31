@@ -1,0 +1,69 @@
+---
+
+- set_fact:
+    links: []
+
+- name: link db container
+  set_fact: 
+    links: "{{links}} + [ instance + '-db:db' ]"
+  when: docker_containers.db is defined
+
+- name: link solr container
+  set_fact:
+    links: "{{links}} + [ instance + '-solr:solr' ]"
+  when: docker_containers.solr is defined
+
+- name: link elasticsearch container
+  set_fact:
+    links: "{{links}} + [ instance + '-elasticsearch:elasticsearch' ]"
+  when: docker_containers.elasticsearch is defined
+
+- name: set default volumes
+  set_fact:
+    volumes:
+      - "{{ instance_data_root_folder }}web:/data/web"
+      - "{{ instance_data_root_folder }}log:/data/log"
+      - "{{ instance_data_root_folder }}cron.d:/etc/cron.d"
+      - "{{ instance_ca_certificates_folder }}:/usr/local/share/ca-certificates"
+
+- name: add transfer_folders to volumes
+  set_fact:
+    volumes: "{{ volumes }} + {{ transfer_folders }}"
+  when: transfer_folders
+
+- name: "{{ instance }}: ensure phpfpm container is {{ state }}"
+  docker:
+    name: "{{ instance }}-phpfpm"
+    image: "{{ docker_images.phpfpm }}:{{ docker_containers.phpfpm.image_tag }}"
+    state: "{{ state }}"
+    restart_policy: always
+    env:
+      APPLICATION_TYPE: "{{ application_type | upper() }}"
+      TYPO3_CONTEXT: "{{ typo3_context }}"
+      FLOW_CONTEXT: "{{ flow_context }}"
+      DOMAINS: "{{ domain_list }}"
+      DOMAIN_LIST: "{{ domain_list }}"
+      PRIMARY_DOMAIN: "{{ primary_domain }}"
+      PRIMARY_SCHEMA: "{{ primary_schema }}"
+      SSMTP_ROOT: "{{ ssmtp_root }}"
+      SSMTP_MAILHUB: "{{ ssmtp_mailhub }}"
+      SSMTP_HOSTNAME: "{{ ssmtp_hostname }}"
+      ENCRYPTION_KEY: "{{ encryption_key }}"
+      PIWIK_URL: "{{ piwik_url }}"
+      PIWIK_TOKEN: "{{ piwik_token }}"
+      DB_ENV_MARIADB_MAJOR: "{{ db_env_mariadb_major }}"
+      DB_ENV_MARIADB_VERSION: "{{ db_env_mariadb_version }}"
+      DB_ENV_MYSQL_DATABASE: "{{ db_env_mysql_database }}"
+      DB_ENV_MYSQL_PASSWORD: "{{ db_env_mysql_password }}"
+      DB_ENV_MYSQL_ROOT_PASSWORD: "{{ db_env_mysql_root_password }}"
+      DB_ENV_MYSQL_USER: "{{ db_env_mysql_user }}"
+      DB_NAME: "{{ db_name }}"
+      DB_PORT: "{{ db_port }}"
+      DB_PORT_3306_TCP: "{{ db_port_3306_tcp }}"
+      DB_PORT_3306_TCP_ADDR: "{{ db_port_3306_tcp_addr }}"
+      DB_PORT_3306_TCP_PORT: "{{ db_port_3306_tcp_port }}"
+      DB_PORT_3306_TCP_PROTO: "{{ db_port_3306_tcp_proto }}"
+
+    links: "{{ links }}"
+    volumes: "{{ volumes }}"
+  when: docker_containers.phpfpm-ext-db is defined

@@ -7,4 +7,7 @@
 - include: docker_containers/elasticsearch.yml state=started
 - include: docker_containers/solr.yml state=started
 - include: docker_containers/phpfpm.yml state=started
+  when: docker_containers.db is defined
+- include: docker_containers/phpfpm-ext-db.yml state=started
+  when: docker_containers.db is not defined
 - include: docker_containers/web.yml state=started
