@@ -5,9 +5,7 @@
 
 - include: docker_containers/web.yml state=stopped
 - include: docker_containers/phpfpm.yml state=stopped
-  when: docker_containers.db is defined
 - include: docker_containers/phpfpm-ext-db.yml state=stopped
-  when: docker_containers.db is not defined
 - include: docker_containers/solr.yml state=stopped
 - include: docker_containers/elasticsearch.yml state=stopped
 - include: docker_containers/db.yml state=stopped
