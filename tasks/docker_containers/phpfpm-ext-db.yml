@@ -3,10 +3,10 @@
 - set_fact:
     links: []
 
-- name: link db container
-  set_fact: 
-    links: "{{links}} + [ instance + '-db:db' ]"
-  when: docker_containers.db is defined
+#- name: link db container
+#  set_fact: 
+#    links: "{{links}} + [ instance + '-db:db' ]"
+#  when: docker_containers.db is defined
 
 - name: link solr container
   set_fact:
@@ -31,10 +31,10 @@
     volumes: "{{ volumes }} + {{ transfer_folders }}"
   when: transfer_folders
 
-- name: "{{ instance }}: ensure phpfpm container is {{ state }}"
+- name: "{{ instance }}: ensure phpfpm-ext-db container is {{ state }}"
   docker:
     name: "{{ instance }}-phpfpm"
-    image: "{{ docker_images.phpfpm }}:{{ docker_containers.phpfpm.image_tag }}"
+    image: "{{ docker_images.phpfpm }}:{{ docker_containers.phpfpm_ext_db.image_tag }}"
     state: "{{ state }}"
     restart_policy: always
     env:
@@ -59,11 +59,11 @@
       DB_ENV_MYSQL_USER: "{{ db_env_mysql_user }}"
       DB_NAME: "{{ db_name }}"
       DB_PORT: "{{ db_port }}"
+      DB_HOST: "{{ db_host }}"
       DB_PORT_3306_TCP: "{{ db_port_3306_tcp }}"
       DB_PORT_3306_TCP_ADDR: "{{ db_port_3306_tcp_addr }}"
       DB_PORT_3306_TCP_PORT: "{{ db_port_3306_tcp_port }}"
       DB_PORT_3306_TCP_PROTO: "{{ db_port_3306_tcp_proto }}"
-
     links: "{{ links }}"
     volumes: "{{ volumes }}"
-  when: docker_containers.phpfpm-ext-db is defined
+  when: docker_containers.phpfpm_ext_db is defined

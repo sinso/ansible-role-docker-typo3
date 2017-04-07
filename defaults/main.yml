@@ -42,6 +42,20 @@ docker_images:
   'elasticsearch': 'sinso/elasticsearch-neos'
 #  redis:
 
+db_env_mariadb_major : "10.0"
+db_env_mariadb_version : "10.0.24+maria-1~jessie"
+db_env_mysql_database : "dbname-test"
+db_env_mysql_password : "ppw"
+db_env_mysql_root_password : "pw"
+db_env_mysql_user : "dbuser"
+db_name : "bjb-db-test"
+db_host: "172.17.0.22"
+db_port : "tcp://172.17.0.22:3306"
+db_port_3306_tcp : "tcp://172.17.0.22:3306"
+db_port_3306_tcp_addr : "172.17.0.22"
+db_port_3306_tcp_port : "3306"
+db_port_3306_tcp_proto : "tcp"
+
 source_ref_stripped: "{{ source_ref | replace('/', '-') }}"
 
 #new_instance_vars_hash: "{{ lookup('md5hash', 'instance_vars/' + instance + '.yml', ' ' ) }}"
