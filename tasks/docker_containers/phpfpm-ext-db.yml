@@ -64,6 +64,7 @@
       DB_PORT_3306_TCP_ADDR: "{{ db_port_3306_tcp_addr }}"
       DB_PORT_3306_TCP_PORT: "{{ db_port_3306_tcp_port }}"
       DB_PORT_3306_TCP_PROTO: "{{ db_port_3306_tcp_proto }}"
+      REVERSEPROXY : "{{ reverseproxy }}"
     links: "{{ links }}"
     volumes: "{{ volumes }}"
   when: docker_containers.phpfpm_ext_db is defined
