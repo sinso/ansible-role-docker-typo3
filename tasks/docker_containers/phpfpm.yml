@@ -53,4 +53,5 @@
       PIWIK_TOKEN: "{{ piwik_token }}"
     links: "{{ links }}"
     volumes: "{{ volumes }}"
+    extra_hosts; "{{ extra_hosts }}"
   when: docker_containers.phpfpm is defined
