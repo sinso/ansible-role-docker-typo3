@@ -42,6 +42,8 @@ docker_images:
   'elasticsearch': 'sinso/elasticsearch-neos'
 #  redis:
 
+extra_hosts: {}
+
 db_env_mariadb_major : "10.0"
 db_env_mariadb_version : "10.0.24+maria-1~jessie"
 db_env_mysql_database : "dbname-test"
