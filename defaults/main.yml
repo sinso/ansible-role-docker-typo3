@@ -42,6 +42,8 @@ docker_images:
   'elasticsearch': 'sinso/elasticsearch-neos'
 #  redis:
 
+extra_hosts: {}
+
 source_ref_stripped: "{{ source_ref | replace('/', '-') }}"
 
 new_instance_vars_hash: "{{ lookup('md5hash', 'instance_vars/' + instance + '.yml') }}"
