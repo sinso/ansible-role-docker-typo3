@@ -2,9 +2,24 @@
 
 - set_fact:
     links: []
+    static_env_vars:
+      APPLICATION_TYPE: "{{ application_type | upper() }}"
+      TYPO3_CONTEXT: "{{ typo3_context }}"
+      FLOW_CONTEXT: "{{ flow_context }}"
+      DOMAINS: "{{ domain_list }}"
+      DOMAIN_LIST: "{{ domain_list }}"
+      PRIMARY_DOMAIN: "{{ primary_domain }}"
+      PRIMARY_SCHEMA: "{{ primary_schema }}"
+      SSMTP_ROOT: "{{ ssmtp_root }}"
+      SSMTP_MAILHUB: "{{ ssmtp_mailhub }}"
+      SSMTP_HOSTNAME: "{{ ssmtp_hostname }}"
+      ENCRYPTION_KEY: "{{ encryption_key }}"
+      PIWIK_URL: "{{ piwik_url }}"
+      PIWIK_TOKEN: "{{ piwik_token }}"
+    all_env_vars: "{{ static_env_vars | combine( {{generic_vars}} ) }}"
 
 - name: link db container
-  set_fact: 
+  set_fact:
     links: "{{links}} + [ instance + '-db:db' ]"
   when: docker_containers.db is defined
 
@@ -37,20 +52,7 @@
     image: "{{ docker_images.phpfpm }}:{{ docker_containers.phpfpm.image_tag }}"
     state: "{{ state }}"
     restart_policy: always
-    env:
-      APPLICATION_TYPE: "{{ application_type | upper() }}"
-      TYPO3_CONTEXT: "{{ typo3_context }}"
-      FLOW_CONTEXT: "{{ flow_context }}"
-      DOMAINS: "{{ domain_list }}"
-      DOMAIN_LIST: "{{ domain_list }}"
-      PRIMARY_DOMAIN: "{{ primary_domain }}"
-      PRIMARY_SCHEMA: "{{ primary_schema }}"
-      SSMTP_ROOT: "{{ ssmtp_root }}"
-      SSMTP_MAILHUB: "{{ ssmtp_mailhub }}"
-      SSMTP_HOSTNAME: "{{ ssmtp_hostname }}"
-      ENCRYPTION_KEY: "{{ encryption_key }}"
-      PIWIK_URL: "{{ piwik_url }}"
-      PIWIK_TOKEN: "{{ piwik_token }}"
+    env: "{{ all_env_vars }}"
     links: "{{ links }}"
     volumes: "{{ volumes }}"
     extra_hosts; "{{ extra_hosts }}"
