@@ -18,6 +18,10 @@ encryption_key: ""
 piwik_url: ""
 piwik_token: ""
 
+php_session_ini_dir: ""
+php_session_save_handler: ""
+php_session_save_path: ""
+
 global_base_domain: 'local'
 
 pull_docker_images: 'no'
