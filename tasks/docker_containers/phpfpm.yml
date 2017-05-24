@@ -4,7 +4,7 @@
     links: []
 
 - name: link db container
-  set_fact: 
+  set_fact:
     links: "{{links}} + [ instance + '-db:db' ]"
   when: docker_containers.db is defined
 
@@ -51,6 +51,9 @@
       ENCRYPTION_KEY: "{{ encryption_key }}"
       PIWIK_URL: "{{ piwik_url }}"
       PIWIK_TOKEN: "{{ piwik_token }}"
+      PHP_SESSION_INI_DIR: {{ php_session_ini_dir }}
+      PHP_SESSION_SAVE_HANDLER: {{ php_session_save_handler }}
+      PHP_SESSION_SAVE_PATH: {{ php_session_save_path }}
     links: "{{ links }}"
     volumes: "{{ volumes }}"
     extra_hosts; "{{ extra_hosts }}"
