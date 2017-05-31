@@ -4,7 +4,7 @@
     links: []
 
 #- name: link db container
-#  set_fact: 
+#  set_fact:
 #    links: "{{links}} + [ instance + '-db:db' ]"
 #  when: docker_containers.db is defined
 
@@ -64,8 +64,11 @@
       DB_PORT_3306_TCP_ADDR: "{{ db_port_3306_tcp_addr }}"
       DB_PORT_3306_TCP_PORT: "{{ db_port_3306_tcp_port }}"
       DB_PORT_3306_TCP_PROTO: "{{ db_port_3306_tcp_proto }}"
-      REVERSEPROXY : "{{ reverseproxy }}"
+      REVERSEPROXY: "{{ reverseproxy }}"
+      PHP_SESSION_INI_DIR: "{{ php_session_ini_dir }}"
+      PHP_SESSION_SAVE_HANDLER: "{{ php_session_save_handler }}"
+      PHP_SESSION_SAVE_PATH: "{{ php_session_save_path }}"
     links: "{{ links }}"
     volumes: "{{ volumes }}"
-    extra_hosts; "{{ extra_hosts }}"
+    extra_hosts: "{{ extra_hosts }}"
   when: docker_containers.phpfpm_ext_db is defined
