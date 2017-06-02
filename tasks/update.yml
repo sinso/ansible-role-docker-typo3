@@ -57,6 +57,11 @@
     removes: "{{ instance_data_root_folder }}web/releases/next"
   when: enable_release_versioning
 
+- name: fix instance folder
+  file:
+    path: "{{ instance_data_root_folder }}web/releases/current/web/"
+    owner: 33
+    group: 33
 
 - include: start.yml
 

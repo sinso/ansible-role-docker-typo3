@@ -7,6 +7,7 @@
     restart_policy: always
 #    pull: "{%if pull_docker_images == 'yes'%}always{% else %}missing{% endif %}"
     volumes:
-      - "{{ instance_data_root_folder }}solr:/opt/solr-tomcat/solr/data"
+      - "{{ instance_data_root_folder }}solr:/opt/solr-tomcat/solr/typo3cores/data"
+      - "{{ instance_data_root_folder }}solr:/opt/solr/server/solr/data"
 #    env:
   when: docker_containers.solr is defined

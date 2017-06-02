@@ -48,6 +48,13 @@ docker_images:
 
 extra_hosts: {}
 
+http_proxy: ""
+quotesapi_basicauth_user: ""
+quotesapi_basicauth_password: ""
+quotesapi_url_protocol: ""
+quotesapi_url_host: ""
+quotesapi_url_staticparams_isin: ""
+
 db_env_mariadb_major : "10.0"
 db_env_mariadb_version : "10.0.24+maria-1~jessie"
 db_env_mysql_database : "dbname-test"
