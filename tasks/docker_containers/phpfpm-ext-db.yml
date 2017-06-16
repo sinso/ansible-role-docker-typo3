@@ -10,7 +10,7 @@
 
 - name: link solr container
   set_fact:
-    links: "{{links}} + [ instance + '-solr:solr' ]"
+    links: "{{links}} + [ instance + '-solr' ]"
   when: docker_containers.solr is defined
 
 - name: link elasticsearch container
@@ -68,7 +68,6 @@
       PHP_SESSION_INI_DIR: "{{ php_session_ini_dir }}"
       PHP_SESSION_SAVE_HANDLER: "{{ php_session_save_handler }}"
       PHP_SESSION_SAVE_PATH: "{{ php_session_save_path }}"
-      REVERSEPROXY: "{{ reverseproxy }}"
       HTTP_PROXY: "{{ http_proxy }}"
       QUOTESAPI_BASICAUTH_USER: "{{ quotesapi_basicauth_user }}"
       QUOTESAPI_BASICAUTH_PASSWORD: "{{ quotesapi_basicauth_password }}"
