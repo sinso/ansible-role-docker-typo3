@@ -10,7 +10,7 @@
 
 - name: link solr container
   set_fact:
-    links: "{{links}} + [ instance + '-solr:solr' ]"
+    links: "{{links}} + [ instance + '-solr' ]"
   when: docker_containers.solr is defined
 
 - name: link elasticsearch container

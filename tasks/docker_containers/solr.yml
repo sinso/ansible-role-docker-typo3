@@ -6,8 +6,16 @@
     state: "{{ state }}"
     restart_policy: always
 #    pull: "{%if pull_docker_images == 'yes'%}always{% else %}missing{% endif %}"
+    env:
+      ENABLE_MASTER: "{{ solr_enable_master }}"
+      ENABLE_SLAVE: "{{ solr_enable_slave }}"
+      SOLR_MASTER_HOST: "{{ solr_master_host }}"
+      SOLR_MASTER_PORT: "{{ solr_master_port }}"
     volumes:
       - "{{ instance_data_root_folder }}solr:/opt/solr-tomcat/solr/typo3cores/data"
       - "{{ instance_data_root_folder }}solr:/opt/solr/server/solr/data"
-#    env:
+    expose:
+      - 8983
+    ports:
+      - 8983:8983
   when: docker_containers.solr is defined
