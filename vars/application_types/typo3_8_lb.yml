@@ -1,0 +1,5 @@
+---
+shared_folders:
+  'fileadmin': 'web/fileadmin'
+  'uploads': 'web/uploads'
+  'typo3temp': 'web/typo3temp'
