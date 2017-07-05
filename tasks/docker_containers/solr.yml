@@ -17,5 +17,5 @@
     expose:
       - 8983
     ports:
-      - 8983:8983
+      - "{{ solr_port }}:8983"
   when: docker_containers.solr is defined

@@ -62,6 +62,7 @@
     path: "{{ instance_data_root_folder }}web/releases/current/web/"
     owner: 33
     group: 33
+    recurse: yes
 
 - include: start.yml
 
