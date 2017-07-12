@@ -7,8 +7,8 @@
     restart_policy: always
 #    pull: "{%if pull_docker_images == 'yes'%}always{% else %}missing{% endif %}"
     env:
-      ENABLE_MASTER: "{{ solr_enable_master }}"
-      ENABLE_SLAVE: "{{ solr_enable_slave }}"
+      SOLR_ENABLE_MASTER: "{{ solr_enable_master }}"
+      SOLR_ENABLE_SLAVE: "{{ solr_enable_slave }}"
       SOLR_MASTER_HOST: "{{ solr_master_host }}"
       SOLR_MASTER_PORT: "{{ solr_master_port }}"
     volumes:
