@@ -71,7 +71,7 @@ db_port_3306_tcp_proto : "tcp"
 
 solr_enable_master: ""
 solr_enable_slave: ""
-solr_master_host: "{{ ansible_default_ipv4.address }}"
+solr_master_host: "{{ ansible_enp0s3.ipv4.address }}"
 solr_master_port: "8983"
 solr_port: "8983"
 

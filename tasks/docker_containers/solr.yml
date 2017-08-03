@@ -1,4 +1,12 @@
 ---
+- name: "{{ instance }} create solr log folder and ensure access rights"
+  file:
+    path: "{{ instance_data_root_folder }}/log/solr"
+    owner: 8983
+    group: 8983
+    state: directory
+  register: solr_log_folder
+
 - name: "{{ instance }}: ensure solr container is {{ state }}"
   docker:
     name: "{{ instance }}-solr"
@@ -14,7 +22,7 @@
     volumes:
       - "{{ instance_data_root_folder }}solr:/opt/solr-tomcat/solr/typo3cores/data"
       - "{{ instance_data_root_folder }}solr:/opt/solr/server/solr/data"
-      - "{{ instance_data_root_folder }}log/solr:/opt/solr/server/logs"
+      - "{{ solr_log_folder.path }}:/opt/solr/server/logs"
     expose:
       - 8983
     ports:
