@@ -74,6 +74,8 @@
       QUOTESAPI_URL_PROTOCOL: "{{ quotesapi_url_protocol }}"
       QUOTESAPI_URL_HOST: "{{ quotesapi_url_host }}"
       QUOTESAPI_URL_STATICPARAMS_ISIN: "{{ quotesapi_url_staticparams_isin }}"
+      BASIC_AUTH_USERNAME: "{{ basic_auth_username }}"
+      BASIC_AUTH_PASSWORD: "{{ basic_auth_password }}"
     links: "{{ links }}"
     volumes: "{{ volumes }}"
     extra_hosts: "{{ extra_hosts }}"
