@@ -5,6 +5,11 @@
     dest: /etc/logrotate.d/docker-typo3-{{ instance }}
 - name: "Create Logrotate File for NGINX"
   template:
+<<<<<<< HEAD
     src: logrotate.d/nginx
     dest: /etc/logrotate.d/
 
+=======
+    src: logrotate.d/docker_nginx_reverse_proxy
+    dest: /etc/logrotate.d/
+>>>>>>> 2cb22df3ee225be6cb8f795df2939e2024319968
