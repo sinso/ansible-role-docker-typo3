@@ -3,3 +3,8 @@
   template:
     src: logrotate.d/docker-typo3.j2
     dest: /etc/logrotate.d/docker-typo3-{{ instance }}
+- name: "Create Logrotate File for NGINX"
+  template:
+    src: logrotate.d/nginx
+    dest: /etc/logrotate.d/
+
