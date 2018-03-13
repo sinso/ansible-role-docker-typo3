@@ -70,7 +70,9 @@
     dest: "{{ instance_data_root_folder }}nginx/custom/"
     owner: 33
     group: 33
-  with_filetree: "{{ role_path }}templates/nginx/"
+    force: yes
+  with_filetree: "{{ role_path }}/templates/nginx/{{ env }}/"
+  when: custom_nginx == 'yes'
 
 - include: start.yml
 
