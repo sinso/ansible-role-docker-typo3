@@ -22,13 +22,15 @@
     owner: 33
     group: 33
     recurse: yes
-  with_dict: shared_folders
+  with_dict: "{{ shared_folders }}"
+
 
 - name: "{{ instance }}: create parent folders for symlinks according to application_type {{ application_type }}"
   file:
     path: "{{ instance_data_root_folder }}web/releases/next/{{ item.value | regex_replace('[^/]+$', '') }}"
     state: directory
-  with_dict: shared_folders
+  with_dict: "{{ shared_folders }}"
+
 
 - name: "{{ instance }}: create symlinks according to application_type {{ application_type }}"
   file:
@@ -36,5 +38,5 @@
     src: "./../{{ item.value | regex_replace('[^/]+', '..') }}/share/{{ item.key }}"
     dest: "{{ instance_data_root_folder }}web/releases/next/{{ item.value }}"
     force: yes
-  with_dict: shared_folders
+  with_dict: "{{ shared_folders }}"
   ignore_errors: yes

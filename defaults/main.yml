@@ -9,6 +9,8 @@ primary_schema: ''
 enable_release_versioning: yes
 force_git: no
 
+state: 'started'
+
 ssmtp_root: ""
 ssmtp_mailhub: ""
 ssmtp_hostname: ""
@@ -46,6 +48,26 @@ extra_hosts: {}
 
 source_ref_stripped: "{{ source_ref | replace('/', '-') }}"
 
-new_instance_vars_hash: "{{ lookup('md5hash', 'instance_vars/' + instance + '.yml') }}"
+#new_instance_vars_hash: "{{ lookup('md5hash', 'instance_vars/' + instance + '.yml') }}"
 
 domain_list: "{{ instance }}.{{ global_base_domain }}{% if domains|length %},{% endif %}{{ domains|join(',') }}"
+
+proxypass_url: ""
+proxypass_tsconst_pidmoneycomputer: ""
+
+trquotesadapter_credentials_appid: ""
+trquotesadapter_credentials_username: ""
+trquotesadapter_credentials_password: ""
+madport_mail_fromaddress: ""
+madport_mail_fromname: ""
+madport_context: ""
+madport_mail_enabled: ""
+madport_mail_receiver: ""
+madport_sms_enabled: ""
+madport_sms_receiver: ""
+madport_api_login_url: ""
+madport_api_parentorgid: ""
+madport_api_loginname: ""
+madport_api_password: ""
+madport_api_fetchalerts_url: ""
+madport_api_commitalerts_url: ""
