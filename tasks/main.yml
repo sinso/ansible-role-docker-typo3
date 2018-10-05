@@ -16,4 +16,5 @@
   when: current_instance_vars_hash.changed or force_update == 'yes'
 #  when: source_url.changed
 
+- include: configure_docker-compose.yml
 - include: start.yml

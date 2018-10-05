@@ -1,0 +1,108 @@
+# {{ ansible_managed }}
+version: '2'
+
+services:
+    {{ instance }}-db:
+        container_name: "{{ instance }}-db"
+        image: "{{ docker_images.db }}:{{ docker_containers.db.image_tag }}"
+        restart: {{ restart_policy }}
+        volumes:
+          - "{{ instance_data_root_folder }}mysql:/var/lib/mysql"
+          - "{{ instance_data_root_folder }}log:/data/log"
+        environment:
+            MYSQL_ROOT_PASSWORD: "PASSWD"
+            MYSQL_DATABASE: "{{ instance }}"
+            MYSQL_USER: "{{ instance }}"
+            MYSQL_PASSWORD: "ROOT_PASSWD"
+
+{% if docker_containers.elasticsearch is defined %}
+    {{ instance }}-elasticsearch:
+        container_name: "{{ instance }}-elasticsearch"
+        image: "{{ docker_images.elasticsearch }}:{{ docker_containers.elasticsearch.image_tag }}"
+        restart: {{ restart_policy }}
+        volumes:
+            - "{{ instance_data_root_folder }}elasticsearch:/usr/share/elasticsearch/data"
+{% endif %}
+
+{% if docker_containers.solr is defined %}
+    {{ instance }}-solr:
+        container_name: "{{ instance }}-solr"
+        image: "{{ docker_images.solr }}:{{ docker_containers.solr.image_tag }}"
+        restart: {{ restart_policy }}
+        volumes:
+            - "{{ instance_data_root_folder }}solr:/opt/solr-tomcat/solr/typo3cores/data"
+{% endif %}
+
+    {{ instance }}-phpfpm:
+        container_name: "{{ instance }}-phpfpm"
+        image: "{{ docker_images.phpfpm }}:{{ docker_containers.phpfpm.image_tag }}"
+        restart: {{ restart_policy }}
+        environment:
+            APPLICATION_TYPE: "{{ application_type | upper() }}"
+            TYPO3_CONTEXT: "{{ typo3_context }}"
+            FLOW_CONTEXT: "{{ flow_context }}"
+            DOMAINS: "{{ domain_list }}"
+            DOMAIN_LIST: "{{ domain_list }}"
+            PRIMARY_DOMAIN: "{{ primary_domain }}"
+            PRIMARY_SCHEMA: "{{ primary_schema }}"
+            SSMTP_ROOT: "{{ ssmtp_root }}"
+            SSMTP_MAILHUB: "{{ ssmtp_mailhub }}"
+            SSMTP_HOSTNAME: "{{ ssmtp_hostname }}"
+            ENCRYPTION_KEY: "{{ encryption_key }}"
+            PIWIK_URL: "{{ piwik_url }}"
+            PIWIK_TOKEN: "{{ piwik_token }}"
+            PHP_SESSION_INI_DIR: "{{ php_session_ini_dir }}"
+            PHP_SESSION_SAVE_HANDLER: "{{ php_session_save_handler }}"
+            PHP_SESSION_SAVE_PATH: "{{ php_session_save_path }}"
+            PROXYPASS_URL: "{{ proxypass_url }}"
+            PROXYPASS_TSCONST_PIDMONEYCOMPUTER: "{{ proxypass_tsconst_pidmoneycomputer }}"
+            THOMSONREUTERSQUOTESADAPTER_CREDENTIALS_APPID: "{{ thomsonreutersquotesadapter_credentials_appid }}"
+            THOMSONREUTERSQUOTESADAPTER_CREDENTIALS_SERVICEUSERNAME: "{{ thomsonreutersquotesadapter_credentials_serviceusername }}"
+            THOMSONREUTERSQUOTESADAPTER_CREDENTIALS_PASSWORD: "{{ thomsonreutersquotesadapter_credentials_password }}"
+            MADPORT_MAIL_FROMADDRESS: "{{ madport_mail_fromaddress }}"
+            MADPORT_MAIL_FROMNAME: "{{ madport_mail_fromname }}"
+            MADPORT_CONTEXT: "{{ madport_context }}"
+            MADPORT_MAIL_ENABLED: "{{ madport_mail_enabled }}"
+            MADPORT_MAIL_RECEIVER: "{{ madport_mail_receiver }}"
+            MADPORT_SMS_ENABLED: "{{ madport_sms_enabled }}"
+            MADPORT_SMS_RECEIVER: "{{ madport_sms_receiver }}"
+            MADPORT_API_LOGIN_URL: "{{ madport_api_login_url }}"
+            MADPORT_API_PARENTORGID: "{{ madport_api_parentorgid }}"
+            MADPORT_API_LOGINNAME: "{{ madport_api_loginname }}"
+            MADPORT_API_PASSWORD: "{{ madport_api_password }}"
+            MADPORT_API_FETCHALERTS_URL: "{{ madport_api_fetchalerts_url }}"
+            MADPORT_API_COMMITALERTS_URL: "{{ madport_api_commitalerts_url }}"
+        links:
+{% if docker_containers.db is defined %}
+            - "{{ instance }}-db:db"
+{% endif %}
+{% if docker_containers.solr is defined %}
+            - "{{ instance }}-solr:solr"
+{% endif %}
+{% if docker_containers.elasticsearch is defined %}
+            - "{{ instance }}-elasticsearch:elasticsearch"
+{% endif %}
+        volumes:
+            - "{{ instance_data_root_folder }}web:/data/web"
+            - "{{ instance_data_root_folder }}log:/data/log"
+            - "{{ instance_data_root_folder }}cron.d:/etc/cron.d"
+            - "{{ instance_ca_certificates_folder }}:/usr/local/share/ca-certificates"
+{% for tr_folder in transfer_folders %}
+            - "{{ tr_folder }}"
+{% endfor %}
+
+    {{ instance }}-web:
+        container_name: "{{ instance }}-web"
+        image: "{{ docker_images.web }}:{{ docker_containers.web.image_tag }}"
+        restart: {{ restart_policy }}
+        environment:
+          VIRTUAL_HOST: "{{ domain_list }}"
+        links:
+          - "{{ instance }}-phpfpm:phpfpm"
+        volumes:
+          - "{{ instance_data_root_folder }}web:/data/web"
+          - "{{ instance_data_root_folder }}log:/data/log"
+          - "{{ instance_data_root_folder }}nginx/custom:/etc/nginx/conf.d/custom"
+{% for tr_folder in transfer_folders %}
+          - "{{ tr_folder }}"
+{% endfor %}

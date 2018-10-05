@@ -1,0 +1,18 @@
+---
+#
+# Ensure the compose directory
+#
+- name: create {{ compose_file_root_folder }} folder for {{ instance }}-compose.yml
+  file:
+    path: '{{ compose_file_root_folder }}'
+    state: directory
+    force: yes
+
+# Ensure that the compose-file is created
+- name: configure docker-compose
+  template:
+    src: docker-compose/compose.yml.j2
+    dest: '{{ compose_file_root_folder }}/{{ instance }}-compose.yml'
+    owner: root
+    group: root
+    mode: 0644
