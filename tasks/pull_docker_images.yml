@@ -12,4 +12,4 @@
 
 - name: pull latest docker images from registry
   command: "docker pull {{ item.value }}:{{ docker_containers[item.key].image_tag }}"
-  with_dict: docker_images
+  with_dict: "{{ docker_images }}"

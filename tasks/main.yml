@@ -5,10 +5,16 @@
 - include: configure_logrotate.yml
 - include: configure_crontab.yml
 
+- name: create md5
+  stat:
+    path: "instance_vars/{{ instance }}.yml"
+    get_md5: yes
+  register: new_instance_vars_hash
+
 - name: "{{ instance }}: check current version"
   command: "cat {{ instance_data_root_folder }}instance_vars.md5"
   register: current_instance_vars_hash
-  changed_when: current_instance_vars_hash.stdout.find(new_instance_vars_hash) == -1
+  changed_when: current_instance_vars_hash.stdout.find(new_instance_vars_hash.stat.md5) == -1
   ignore_errors: yes
 
 
@@ -18,3 +24,5 @@
 
 - include: configure_docker-compose.yml
 - include: start.yml
+
+
