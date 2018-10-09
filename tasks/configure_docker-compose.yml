@@ -12,7 +12,7 @@
 - name: configure docker-compose
   template:
     src: docker-compose/compose.yml.j2
-    dest: '{{ compose_file_root_folder }}/{{ instance }}-compose.yml'
+    dest: '{{ compose_file_root_folder }}/docker-compose.yml'
     owner: root
     group: root
     mode: 0644
