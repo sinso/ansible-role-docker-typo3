@@ -60,6 +60,11 @@ proxypass_tsconst_pidmoneycomputer: ""
 trquotesadapter_credentials_appid: ""
 trquotesadapter_credentials_username: ""
 trquotesadapter_credentials_password: ""
+
+thomsonreutersquotesadapter_credentials_appid: ""
+thomsonreutersquotesadapter_credentials_serviceusername: ""
+thomsonreutersquotesadapter_credentials_password: ""
+
 madport_mail_fromaddress: ""
 madport_mail_fromname: ""
 madport_context: ""
