@@ -11,14 +11,10 @@ services:
           - "{{ instance_data_root_folder }}mysql:/var/lib/mysql"
           - "{{ instance_data_root_folder }}log:/data/log"
         environment:
-            #MYSQL_ROOT_PASSWORD: "{{ lookup('password', '{{ playbook_dir }}/instance_credentials/' + instance + '/docker-typo3/docker_containers/db/root length=32') }}"
-            #MYSQL_DATABASE: "{{ instance }}"
-            #MYSQL_USER: "{{ instance }}"
-            #MYSQL_PASSWORD: "{{ lookup('password', '{{ playbook_dir }}/instance_credentials/' + instance + '/docker-typo3/docker_containers/db/user length=32') }}"
-            MYSQL_ROOT_PASSWORD: "PASSWD"
+            MYSQL_ROOT_PASSWORD: "{{ lookup('password', '{{ playbook_dir }}/instance_credentials/' + instance + '/docker-typo3/docker_containers/db/root length=32') }}"
             MYSQL_DATABASE: "{{ instance }}"
             MYSQL_USER: "{{ instance }}"
-            MYSQL_PASSWORD: "ROOT_PASSWD"
+            MYSQL_PASSWORD: "{{ lookup('password', '{{ playbook_dir }}/instance_credentials/' + instance + '/docker-typo3/docker_containers/db/user length=32') }}"
 {% endif %}
 {% if docker_containers.elasticsearch is defined %}
     {{ instance }}-elasticsearch:
