@@ -37,6 +37,16 @@ services:
         container_name: "{{ instance }}-phpfpm"
         image: "{{ docker_images.phpfpm }}:{{ docker_containers.phpfpm.image_tag }}"
         restart: {{ restart_policy }}
+        depends_on:
+{% if docker_containers.db is defined %}
+            - "{{ instance }}-db"
+{% endif %}
+{% if docker_containers.solr is defined %}
+            - "{{ instance }}-solr"
+{% endif %}
+{% if docker_containers.elasticsearch is defined %}
+            - "{{ instance }}-elasticsearch"
+{% endif %}
         environment:
             APPLICATION_TYPE: "{{ application_type | upper() }}"
             TYPO3_CONTEXT: "{{ typo3_context }}"
@@ -96,10 +106,16 @@ services:
         container_name: "{{ instance }}-web"
         image: "{{ docker_images.web }}:{{ docker_containers.web.image_tag }}"
         restart: {{ restart_policy }}
+        depends_on:
+{% if docker_containers.phpfpm is defined %}
+          - "{{ instance }}-phpfpm"
+{% endif %}
         environment:
           VIRTUAL_HOST: "{{ domain_list }}"
         links:
+{% if docker_containers.phpfpm is defined %}
           - "{{ instance }}-phpfpm:phpfpm"
+{% endif %}
         volumes:
           - "{{ instance_data_root_folder }}web:/data/web"
           - "{{ instance_data_root_folder }}log:/data/log"
