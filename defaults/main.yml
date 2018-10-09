@@ -10,6 +10,7 @@ enable_release_versioning: yes
 force_git: no
 
 state: 'started'
+restart_policy: 'always'
 
 ssmtp_root: ""
 ssmtp_mailhub: ""
@@ -28,6 +29,7 @@ force_update : 'no'
 
 data_root_folder: /opt/
 instance_data_root_folder: "{{ data_root_folder }}{{ instance }}/data/"
+compose_file_root_folder: "{{ instance_data_root_folder }}compose"
 
 backup_root_folder: /backups/
 instance_backup_root_folder: "{{ backup_root_folder }}{{ instance }}/{{ ansible_date_time.iso8601 | replace(':', '-') }}/"

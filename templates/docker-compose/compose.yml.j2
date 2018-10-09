@@ -2,6 +2,7 @@
 version: '2'
 
 services:
+{% if docker_containers.db is defined %}
     {{ instance }}-db:
         container_name: "{{ instance }}-db"
         image: "{{ docker_images.db }}:{{ docker_containers.db.image_tag }}"
@@ -10,11 +11,15 @@ services:
           - "{{ instance_data_root_folder }}mysql:/var/lib/mysql"
           - "{{ instance_data_root_folder }}log:/data/log"
         environment:
+            #MYSQL_ROOT_PASSWORD: "{{ lookup('password', '{{ playbook_dir }}/instance_credentials/' + instance + '/docker-typo3/docker_containers/db/root length=32') }}"
+            #MYSQL_DATABASE: "{{ instance }}"
+            #MYSQL_USER: "{{ instance }}"
+            #MYSQL_PASSWORD: "{{ lookup('password', '{{ playbook_dir }}/instance_credentials/' + instance + '/docker-typo3/docker_containers/db/user length=32') }}"
             MYSQL_ROOT_PASSWORD: "PASSWD"
             MYSQL_DATABASE: "{{ instance }}"
             MYSQL_USER: "{{ instance }}"
             MYSQL_PASSWORD: "ROOT_PASSWD"
-
+{% endif %}
 {% if docker_containers.elasticsearch is defined %}
     {{ instance }}-elasticsearch:
         container_name: "{{ instance }}-elasticsearch"
@@ -23,7 +28,6 @@ services:
         volumes:
             - "{{ instance_data_root_folder }}elasticsearch:/usr/share/elasticsearch/data"
 {% endif %}
-
 {% if docker_containers.solr is defined %}
     {{ instance }}-solr:
         container_name: "{{ instance }}-solr"
@@ -32,7 +36,7 @@ services:
         volumes:
             - "{{ instance_data_root_folder }}solr:/opt/solr-tomcat/solr/typo3cores/data"
 {% endif %}
-
+{% if docker_containers.phpfpm is defined %}
     {{ instance }}-phpfpm:
         container_name: "{{ instance }}-phpfpm"
         image: "{{ docker_images.phpfpm }}:{{ docker_containers.phpfpm.image_tag }}"
@@ -51,11 +55,11 @@ services:
             ENCRYPTION_KEY: "{{ encryption_key }}"
             PIWIK_URL: "{{ piwik_url }}"
             PIWIK_TOKEN: "{{ piwik_token }}"
-            PHP_SESSION_INI_DIR: "{{ php_session_ini_dir }}"
-            PHP_SESSION_SAVE_HANDLER: "{{ php_session_save_handler }}"
-            PHP_SESSION_SAVE_PATH: "{{ php_session_save_path }}"
             PROXYPASS_URL: "{{ proxypass_url }}"
             PROXYPASS_TSCONST_PIDMONEYCOMPUTER: "{{ proxypass_tsconst_pidmoneycomputer }}"
+            TRQUOTESADAPTER_CREDENTIALS_APPID: "{{ trquotesadapter_credentials_appid }}"
+            TRQUOTESADAPTER_CREDENTIALS_USERNAME: "{{ trquotesadapter_credentials_username }}"
+            TRQUOTESADAPTER_CREDENTIALS_PASSWORD: "{{ trquotesadapter_credentials_password }}"
             THOMSONREUTERSQUOTESADAPTER_CREDENTIALS_APPID: "{{ thomsonreutersquotesadapter_credentials_appid }}"
             THOMSONREUTERSQUOTESADAPTER_CREDENTIALS_SERVICEUSERNAME: "{{ thomsonreutersquotesadapter_credentials_serviceusername }}"
             THOMSONREUTERSQUOTESADAPTER_CREDENTIALS_PASSWORD: "{{ thomsonreutersquotesadapter_credentials_password }}"
@@ -90,7 +94,8 @@ services:
 {% for tr_folder in transfer_folders %}
             - "{{ tr_folder }}"
 {% endfor %}
-
+{% endif %}
+{% if docker_containers.web is defined %}
     {{ instance }}-web:
         container_name: "{{ instance }}-web"
         image: "{{ docker_images.web }}:{{ docker_containers.web.image_tag }}"
@@ -106,3 +111,4 @@ services:
 {% for tr_folder in transfer_folders %}
           - "{{ tr_folder }}"
 {% endfor %}
+{% endif %}
