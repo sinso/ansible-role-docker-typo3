@@ -45,6 +45,16 @@
 - include: backup.yml
   when: create_backup == 'yes'
 
+- name: delete the previous release folder
+  command: "rm -rf $(readlink {{ instance_data_root_folder }}web/releases/previous)"
+  when: enable_release_versioning
+
+- name: delete the previous symlink
+  file:
+    path: "{{ instance_data_root_folder }}web/releases/previous"
+    state: absent
+  when: enable_release_versioning
+
 - name: create symlink to previous web source
   command: "mv {{ instance_data_root_folder }}web/releases/current {{ instance_data_root_folder }}web/releases/previous"
   args:
